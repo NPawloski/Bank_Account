@@ -27,8 +27,15 @@ namespace Bank_Account
         }
 
         //constructor
+        public Client()
+        {
+
+        }
+
         public Client(string name,int clientNumber)
         {
+            this.name = name;
+            this.clientNumber = clientNumber;
             yearsCustomer = 1;
         }
 

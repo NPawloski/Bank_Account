@@ -10,6 +10,11 @@ namespace Bank_Account
     {
 
         //constructor
+        public Checking()
+        {
+
+        }
+
         public Checking(int accountNumber,decimal balance)
         {
             this.accountNumber = accountNumber;

@@ -14,6 +14,11 @@ namespace Bank_Account
         private decimal minBalance = 500.00m;
 
         //constructor
+        public Savings()
+        {
+
+        }
+
         public Savings(int accountNumber, decimal balance)
         {
             this.accountNumber = accountNumber;

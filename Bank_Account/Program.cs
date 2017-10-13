@@ -8,45 +8,69 @@ namespace Bank_Account
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             //variables to take in user input
             string name;
             int cliNum;
-            int accNum;
-            decimal initDeposit;
             bool exit = false;
+            bool changeUser = true;
             string whatToDo;
+            int currentUser = 0;
 
-            ////taking in user info
-            //Console.WriteLine("Please enter your name.");
-            //name = Console.ReadLine();
+            List<string> userNames = new List<string>();
 
-            //Console.WriteLine("Please enter your client number.");
-            //cliNum = int.Parse(Console.ReadLine());
-
-
-            //instansiate client
-            Client client1 = new Client("client1", 13247);
-
-            ////take in clients account info
-            //Console.WriteLine("Please enter your account number.");
-            //accNum = int.Parse(Console.ReadLine());
-
-            //Console.WriteLine("Please enter your initial deposit.");
-            //initDeposit = decimal.Parse(Console.ReadLine());
+            List<Client> clients = new List<Client>();
+            List<Checking> checkingAccounts = new List<Checking>();
+            List<Savings> savingsAccounts = new List<Savings>();
 
 
-            //create checking account
-            Checking checking1 = new Checking(11214, 1000m);
 
-            //create savings account
-            Savings savings1 = new Savings(11214, 1000m);
+
 
             while (exit == false)
             {
+
+                while (changeUser == true)
+                {
+                    //taking in user info
+                    Console.WriteLine("Please enter your username.");
+                    name = Console.ReadLine().ToUpper();
+
+                    //check to see if username already exists
+                    if (userNames.Contains(name) == true)
+                    {
+                        currentUser = userNames.IndexOf(name);
+                        changeUser = false;
+                    }
+                    //if username does not exist, add it to the list and create the account
+                    else
+                    {
+                        Console.WriteLine("Please enter your client number.");
+                        cliNum = int.Parse(Console.ReadLine());
+
+                        currentUser = userNames.Count;
+
+                        userNames.Add(name);
+
+                        //instansiate client
+                        clients.Add(new Client(name,cliNum));
+
+
+                        //create checking account
+                        checkingAccounts.Add(new Checking(cliNum, 1000m));
+
+                        //create savings account
+                        savingsAccounts.Add(new Savings(cliNum, 1000m));
+
+                        changeUser = false;
+                    }
+                }
+
+
                 //ask user what to do
-                Console.WriteLine("1. View Client Information \n2. View Account Balance \n3. Depsite Funds \n4. Withdraw Funds \n5. Exit");
+                Console.WriteLine("1. View Client Information \n2. View Account Balance \n3. Depsite Funds \n4. Withdraw Funds \n5. Change User \n6. Exit");
                 whatToDo = Console.ReadLine();
 
                 //used to take in user input for sub menus
@@ -56,62 +80,67 @@ namespace Bank_Account
                 {
                     //show user info
                     case "1":
-                        Console.WriteLine(client1.GetClientInfo());
+                        Console.WriteLine(clients[currentUser].GetClientInfo());
                         break;
 
-                        //show account balances
+                    //show account balances
                     case "2":
                         Console.WriteLine("1. Checking \n2. Savings");
                         submenu = Console.ReadLine();
                         if (submenu == "1")
                         {
-                            Console.WriteLine("$" + checking1.Balance);
+                            Console.WriteLine("$" + checkingAccounts[currentUser].Balance);
                         }
                         else if (submenu == "2")
                         {
-                            Console.WriteLine("$" + savings1.Balance);
+                            Console.WriteLine("$" + savingsAccounts[currentUser].Balance);
                         }
                         break;
 
-                        //make deposite
+                    //make deposite
                     case "3":
                         Console.WriteLine("1. Checking \n2. Savings");
                         submenu = Console.ReadLine();
                         if (submenu == "1")
                         {
                             Console.WriteLine("Please enter the amount to deposit");
-                            checking1.Deposit(decimal.Parse(Console.ReadLine()));
+                            checkingAccounts[currentUser].Deposit(decimal.Parse(Console.ReadLine()));
                         }
                         else if (submenu == "2")
                         {
                             Console.WriteLine("Please enter the amount to deposit");
-                            savings1.Deposit(decimal.Parse(Console.ReadLine()));
+                            savingsAccounts[currentUser].Deposit(decimal.Parse(Console.ReadLine()));
                         }
                         break;
 
-                        //make withdraws
+                    //make withdraws
                     case "4":
                         Console.WriteLine("1. Checking \n2. Savings");
                         submenu = Console.ReadLine();
                         if (submenu == "1")
                         {
                             Console.WriteLine("Please enter the amount to withdraw");
-                            checking1.Withdraw(decimal.Parse(Console.ReadLine()));
+                            checkingAccounts[currentUser].Withdraw(decimal.Parse(Console.ReadLine()));
                         }
                         else if (submenu == "2")
                         {
                             Console.WriteLine("Please enter the amount to withdraw");
-                            savings1.Withdraw(decimal.Parse(Console.ReadLine()));
+                            savingsAccounts[currentUser].Withdraw(decimal.Parse(Console.ReadLine()));
                         }
                         break;
 
 
-                        //exit application
+                        //allows user to chnge accounts or make a new one
                     case "5":
-                        Environment.Exit(0);
+                        changeUser = true;
                         break;
 
-                        //does nothing if user enters invalid input                   
+                    //exit application
+                    case "6":
+                        exit = true;
+                        break;
+
+                    //does nothing if user enters invalid input                   
                     default:
                         break;
                 }
@@ -121,5 +150,7 @@ namespace Bank_Account
             }
 
         }
+
+
     }
 }
