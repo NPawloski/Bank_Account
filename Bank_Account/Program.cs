@@ -47,7 +47,7 @@ namespace Bank_Account
                     //if username does not exist, add it to the list and create the account
                     else
                     {
-                        Console.WriteLine("Please enter your client number.");
+                        Console.WriteLine("Please enter your client number.(6 digits)");
                         cliNum = int.Parse(Console.ReadLine());
 
                         currentUser = userNames.Count;
@@ -70,7 +70,7 @@ namespace Bank_Account
 
 
                 //ask user what to do
-                Console.WriteLine("1. View Client Information \n2. View Account Balance \n3. Depsite Funds \n4. Withdraw Funds \n5. Change User \n6. Exit");
+                Console.WriteLine("1. View Client Information \n2. View Account Balance \n3. Depsite Funds \n4. Withdraw Funds \n5. Exit");
                 whatToDo = Console.ReadLine();
 
                 //used to take in user input for sub menus
@@ -130,13 +130,13 @@ namespace Bank_Account
                         break;
 
 
-                        //allows user to chnge accounts or make a new one
-                    case "5":
-                        changeUser = true;
-                        break;
+                    //    //allows user to chnge accounts or make a new one
+                    //case "5":
+                    //    changeUser = true;
+                    //    break;
 
                     //exit application
-                    case "6":
+                    case "5":
                         exit = true;
                         break;
 
